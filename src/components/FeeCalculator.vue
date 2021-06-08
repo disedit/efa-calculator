@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import coefficients from '../data/coefficients.js'
+import { coefficients, roundTo, GDPBrackets } from '../settings.js'
 import { ref, computed } from 'vue'
 
 /* Party data setup */
@@ -42,28 +42,22 @@ const MEPs = ref(0)
 const inGovernment = ref(false)
 const GDP = ref(2)
 
-/* Determine rep level */
-const isLocal = computed(() => MRPs.value + MSPs.value + MEPs.value === 0)
-const isRegional = computed(() => MSPs.value + MEPs.value === 0 && !isLocal.value)
-const isState = computed(() => MEPs.value === 0 && !isRegional.value && !isLocal.value)
-const onEuparl = computed(() => MEPs.value > 0)
+/* Determine highest representative level */
+const repLevel = computed(() => {
+  if (MEPs.value > 0) return 'euparl'
+  if (MSPs.value > 0) return 'state'
+  if (MRPs.value > 0) return 'regional'
+  return 'local'
+})
 
 /* Calculate fee */
 const resultBeforeGDP = computed(() => {
-  const {
-    intercept, local, regional, state, euparl, government,
-    MRPs: MRPCoefficient, MSPs: MSPCoefficient, MEPs: MEPCoefficient
-  } = coefficients
-
-  let fee = intercept
-  fee += isLocal.value ? local : 0
-  fee += isRegional.value ? regional : 0
-  fee += isState.value ? state : 0
-  fee += onEuparl.value ? euparl : 0
-  fee += MRPs.value * MRPCoefficient
-  fee += MSPs.value * MSPCoefficient
-  fee += MEPs.value * MEPCoefficient
-  fee += inGovernment.value ? government : 0
+  let fee = coefficients.intercept
+  fee += coefficients[repLevel.value]
+  fee += MRPs.value * coefficients.MRPs
+  fee += MSPs.value * coefficients.MSPs
+  fee += MEPs.value * coefficients.MEPs
+  fee += inGovernment.value ? coefficients.government : 0
 
   return fee
 })
@@ -71,14 +65,7 @@ const resultBeforeGDP = computed(() => {
 /* Adjusted for GDP */
 const resultAfterGDP = computed(() => {
   let { value: fee } = resultBeforeGDP
-  const roundTo = 25
-  const brackets = {
-    1: 0.95,
-    2: 1,
-    3: 1.05
-  }
-
-  fee *= brackets[GDP.value]
+  fee *= GDPBrackets[GDP.value]
   return roundTo * Math.round(fee / roundTo)
 })
 
