@@ -1,9 +1,9 @@
 <template>
-  Hello
+  <FeeCalculator />
 </template>
 
 <script setup>
-
+import FeeCalculator from './components/FeeCalculator.vue'
 </script>
 
 <style>
