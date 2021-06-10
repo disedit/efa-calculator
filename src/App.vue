@@ -14,6 +14,7 @@ import FeeCalculator from './components/FeeCalculator.vue'
 </script>
 
 <style lang="scss">
+$font-family-sans-serif: Geogrotesque, sans-serif;
 $enable-rounded: false;
 $primary: #80379b;
 @import 'bootstrap/scss/bootstrap';
@@ -32,8 +33,8 @@ $primary: #80379b;
   src:
     local("Geogrotesque Regular"),
     local("Geogrotesque-Regular"),
-    url("./assets/fonts/Geogrotesque-Medium.woff2") format("woff2"),
-    url("./assets/fonts/Geogrotesque-Medium.woff") format("woff");
+    url("./assets/fonts/Geogrotesque-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Geogrotesque-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal
 }
@@ -50,7 +51,6 @@ $primary: #80379b;
 }
 
 body {
-  font-family: Geogrotesque, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--gray-dark);

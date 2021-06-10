@@ -2,73 +2,75 @@
   <fieldset class="calculator">
     <legend><h1>Contribution <br> Calculator</h1></legend>
 
-    <div class="efa-card field">
-      <NumberInput
-        name="MRPs" 
-        label="Members in the Regional Parliament"
-        v-model="MRPs" />
-    </div>
-
-    <div class="efa-card field">
-      <NumberInput
-        name="MSPs" 
-        label="Members in the State Parliament"
-        v-model="MSPs" />
-    </div>
-
-    <div class="efa-card field">
-      <NumberInput
-        name="MEPs" 
-        label="Members in the European Parliament"
-        v-model="MEPs" />
-    </div>
-
-    <div class="efa-card field">
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="inGovernment" v-model="inGovernment">
-        <label class="form-check-label" for="inGovernment">Party is in government</label>
-      </div>
-    </div>
-
-    <div class="efa-card result" aria-live="polite">
-      <span class="result-label">
-        Before GDP adjustment
-      </span>
-      <span class="result-number">
-        {{ formated(resultBeforeGDP) }}
-      </span>
-    </div>
-
-    <div class="efa-card field">
-      <div>
-        <label for="GDP">
-          GDP/Inhabitant Index
-        </label>
-        <select v-model="GDP" name="GDP" id="GDP" class="form-select form-select-lg">
-          <option value="1">&lt; 90</option>
-          <option value="2">90-125</option>
-          <option value="3">&gt; 125</option>
-        </select>
+    <div class="background">
+      <div class="efa-card field">
+        <NumberInput
+          name="MRPs" 
+          label="Members in the Regional Parliament"
+          v-model="MRPs" />
       </div>
 
-      <div>
-        <label for="party">Or select based on party</label>
-        <select name="party" id="party" @change="autoselectGDP" class="form-select form-select-lg">
-          <option value="2" disabled selected>Select your party</option>
-          <option v-for="party in parties" :key="party.name" :value="party.bracket">
-            {{ party.name }}
-          </option>
-        </select>
+      <div class="efa-card field">
+        <NumberInput
+          name="MSPs" 
+          label="Members in the State Parliament"
+          v-model="MSPs" />
       </div>
-    </div>
 
-    <div class="efa-card result highlighted">
-      <span class="result-label">
-        Yearly contribution
-      </span>
-      <span class="result-number">
-        {{ formated(resultAfterGDP) }}
-      </span>
+      <div class="efa-card field">
+        <NumberInput
+          name="MEPs" 
+          label="Members in the European Parliament"
+          v-model="MEPs" />
+      </div>
+
+      <div class="efa-card field">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="inGovernment" v-model="inGovernment">
+          <label class="form-check-label" for="inGovernment">Party is in government</label>
+        </div>
+      </div>
+
+      <div class="efa-card result" aria-live="polite">
+        <span class="result-label">
+          Before GDP adjustment
+        </span>
+        <span class="result-number">
+          {{ formated(resultBeforeGDP) }}
+        </span>
+      </div>
+
+      <div class="efa-card field gdp">
+        <div class="column index-column">
+          <label for="GDP">
+            GDP/Inhabitant Index
+          </label>
+          <select v-model="GDP" name="GDP" id="GDP" class="form-select form-select-lg">
+            <option value="1">&lt; 90</option>
+            <option value="2">90-125</option>
+            <option value="3">&gt; 125</option>
+          </select>
+        </div>
+
+        <div class="column party-column">
+          <label for="party">If you don't know, select your party</label>
+          <select name="party" id="party" @change="autoselectGDP" class="form-select form-select-lg">
+            <option value="2" disabled selected>Select your party</option>
+            <option v-for="party in parties" :key="party.name" :value="party.bracket">
+              {{ party.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="efa-card result highlighted">
+        <span class="result-label">
+          Yearly contribution
+        </span>
+        <span class="result-number">
+          {{ formated(resultAfterGDP) }}
+        </span>
+      </div>
     </div>
   </fieldset>
 </template>
@@ -130,24 +132,27 @@ const autoselectGDP = (e) => {
   margin: 2rem 0;
   padding: 0;
 
-  legend h1 {
+  h1 {
     font-weight: bold;
     color: var(--accent-color);
     font-size: 3.75rem;
-    margin: 0 0 1.25rem;
+    margin: 0 0 4rem;
     line-height: .9;
   }
 
-  &::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transform: translate(3rem, 0);
-    background: var(--gray-light);
+  .background{
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: -3rem;
+      left: 3rem;
+      right: -3rem;
+      bottom: -3rem;
+      background: var(--gray-light);
+    }
   }
 }
 
@@ -178,6 +183,7 @@ const autoselectGDP = (e) => {
     background: var(--accent-color);
     padding-top: 2rem;
     padding-bottom: 2rem;
+    margin-top: -2rem;
   }
 
   &-number {
@@ -187,10 +193,57 @@ const autoselectGDP = (e) => {
   }
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+
+  label {
+    margin-bottom: .5rem;
+  }
+
+  .form-select {
+    margin-top: auto;
+  }
+
+  &.index-column {
+    width: 250px;
+    margin-right: 1rem;
+  }
+}
+
 @media (max-width: 750px) {
-  .calculator {
-    &::before {
-      transform: none;
+  .calculator {
+    h1 {
+      margin-bottom: 2rem;
+      font-size: 3rem;
+    }
+
+    .background::before {
+      top: -1rem;
+      left: -1rem;
+      bottom: -1rem;
+      right: -1rem;
+    }
+
+    .field {
+      margin: 1rem 0;
+    }
+
+    .result.highlighted {
+      margin-top: -1rem;
+    }
+
+    .field.gdp {
+      flex-direction: column;
+    }
+
+    .column {
+      width: 100%;
+    }
+
+    .party-column {
+      margin-top: 1rem;
     }
   }
 }

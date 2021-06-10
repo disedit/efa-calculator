@@ -41,16 +41,18 @@ const emits = defineEmit(['update:modelValue'])
   .number {
     &-label {
       font-size: 1.25rem;
+      flex-grow: 1;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
     }
 
     &-input {
-      margin-left: auto;
-
       input {
         appearance: none;
         font-size: 3rem;
         text-align: right;
-        width: 6rem;
+        width: 8rem;
         border: 0;
         margin: calc(var(--card-padding) * -1);
         padding: var(--card-padding);
