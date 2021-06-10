@@ -41,28 +41,35 @@
       </div>
 
       <div class="efa-card field gdp">
-        <div class="column index-column">
-          <label for="GDP">
-            GDP/Inhabitant Index
-          </label>
-          <select v-model="GDP" name="GDP" id="GDP" class="form-select form-select-lg">
-            <option value="1">&lt; 90</option>
-            <option value="2">90-125</option>
-            <option value="3">&gt; 125</option>
-          </select>
+        <div class="columns">
+          <div class="column index-column">
+            <label for="GDP">
+              GDP/Inhabitant Index
+            </label>
+            <select v-model="GDP" name="GDP" id="GDP" class="form-select form-select-lg">
+              <option value="1">&lt; 90</option>
+              <option value="2">90-125</option>
+              <option value="3">&gt; 125</option>
+            </select>
+          </div>
+
+          <div class="column party-column">
+            <label for="party">If you don't know, select your party</label>
+            <select name="party" id="party" @change="autoselectGDP" class="form-select form-select-lg">
+              <option value="2" disabled selected>Select your party</option>
+              <option v-for="party in parties" :key="party.name" :value="party.bracket">
+                {{ party.name }}
+              </option>
+            </select>
+          </div>
         </div>
 
-        <div class="column party-column">
-          <label for="party">If you don't know, select your party</label>
-          <select name="party" id="party" @change="autoselectGDP" class="form-select form-select-lg">
-            <option value="2" disabled selected>Select your party</option>
-            <option v-for="party in parties" :key="party.name" :value="party.bracket">
-              {{ party.name }}
-            </option>
-          </select>
+        <div class="source">
+          Member Parties of EFA based on the regional GDP/Inhabitant. The average EU-28 (2017) = 100.
+          Index based on GDP in purchasing power standards (PPS) in relation to the EU-28 average, by NUTS 2 regions.
+          Source: <a href="https://ec.europa.eu/eurostat/documents/3217494/10095393/KS-HA-19-001-EN-N.pdf/d434affa-99cd-4ebf-a3e3-6d4a5f10bb07?t=1574339587000" target="_blank" rel="noopener noreferer">Eurostat</a>
         </div>
       </div>
-
       <div class="efa-card result highlighted">
         <span class="result-label">
           Yearly contribution
@@ -193,6 +200,10 @@ const autoselectGDP = (e) => {
   }
 }
 
+.columns {
+  display: flex;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -210,6 +221,21 @@ const autoselectGDP = (e) => {
     width: 250px;
     margin-right: 1rem;
   }
+
+  &.full {
+    width: 100%;
+  }
+}
+
+.field.gdp {
+  display: block;
+}
+
+.source {
+  display: block;
+  font-size: .85rem;
+  line-height: 1.1;
+  margin-top: 1rem;
 }
 
 @media (max-width: 750px) {
@@ -234,7 +260,7 @@ const autoselectGDP = (e) => {
       margin-top: -1rem;
     }
 
-    .field.gdp {
+    .columns {
       flex-direction: column;
     }
 
