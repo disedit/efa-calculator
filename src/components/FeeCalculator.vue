@@ -123,7 +123,12 @@ const resultAfterGDP = computed(() => {
 
 /* Formated result */
 const formated = (number) => {
-  return new Intl.NumberFormat('en', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(number)
+  return new Intl.NumberFormat('en-IE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(number)
 }
 
 /* GDP party selector */
