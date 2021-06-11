@@ -83,9 +83,9 @@
 </template>
 
 <script setup>
-import NumberInput from './NumberInput.vue'
-import { coefficients, roundTo, GDPBrackets, parties } from '../settings.js'
 import { ref, computed } from 'vue'
+import { coefficients, roundTo, GDPBrackets, parties } from '../settings.js'
+import NumberInput from './NumberInput.vue'
 
 /* Party data setup */
 const MRPs = ref(0)
