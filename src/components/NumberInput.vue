@@ -4,7 +4,6 @@
       {{ label }}
     </label>
     <div class="number-input">
-      <button class="btn stepper subtract" @click="subtract">-</button>
       <input
         type="number"
         class="form-control"
@@ -15,12 +14,18 @@
         max="99"
         maxlength="2"
         @input="(e) => $emit('update:modelValue', e.target.value)">
-      <button class="btn stepper add" @click="add">+</button>
+      <button class="btn stepper add" @click="add" :aria-label="`Add ${label}`">
+        <ArrowIcon />
+      </button>
+      <button class="btn stepper subtract" @click="subtract" :aria-label="`Subtract ${label}`">
+        <ArrowIcon />
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import ArrowIcon from './ArrowIcon.vue'
 import { defineProps, defineEmit, useContext } from 'vue'
 
 const props = defineProps({
@@ -80,9 +85,12 @@ const subtract = () => {
       display: flex;
       align-items: center;
       padding: var(--card-padding);
+      line-height: 1.25;
     }
 
     &-input {
+      display: flex;
+      align-items: stretch;
       position: relative;
       margin-left: 1rem;
       color: var(--black);
@@ -91,15 +99,12 @@ const subtract = () => {
       .stepper {
         appearance: none;
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: var(--gray-light);
+        right: .25rem;
+        background: transparent;
         color: var(--gray-dark);
         border: 0;
-        border-radius: 100%;
-        padding: 0;
-        width: 1.6em;
-        height: 1.6em;
+        padding: 0 .75rem;
+        width: 2em;
         font-size: 1.25rem;
 
         &:active {
@@ -107,12 +112,18 @@ const subtract = () => {
           color: var(--white);
         }
 
-        &.subtract {
-          left: 1rem;
+        &.add {
+          top: .25rem;
+          bottom: calc(50% + .125rem);
+
+          svg {
+            transform: rotate(180deg);
+          }
         }
 
-        &.add {
-          right: 1rem;
+        &.subtract {
+          top: calc(50% + .125rem);
+          bottom: .25rem;
         }
       }
 
@@ -121,12 +132,11 @@ const subtract = () => {
         -moz-appearance: textfield;
         font-size: 3rem;
         text-align: right;
-        width: 11.5rem;
+        width: 9.5rem;
         border: 0;
-        padding: var(--card-padding) 4rem;
+        padding: var(--card-padding) 4rem var(--card-padding) 1rem;
         color: inherit;
         background: transparent;
-        text-align: center;
 
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {

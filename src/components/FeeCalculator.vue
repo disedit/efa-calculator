@@ -42,6 +42,15 @@
 
       <div class="efa-card field gdp">
         <div class="columns">
+          <div class="column party-column">
+            <label for="party">Select Region's GDP Index based on party</label>
+            <select name="party" id="party" @change="autoselectGDP" class="form-select form-select-lg">
+              <option value="2" disabled selected>Select your party</option>
+              <option v-for="party in parties" :key="party.name" :value="party.bracket">
+                {{ party.name }}
+              </option>
+            </select>
+          </div>
           <div class="column index-column">
             <label for="GDP">
               GDP/Inhabitant Index
@@ -52,21 +61,11 @@
               <option value="3">&gt; 125</option>
             </select>
           </div>
-
-          <div class="column party-column">
-            <label for="party">If you don't know, select your party</label>
-            <select name="party" id="party" @change="autoselectGDP" class="form-select form-select-lg">
-              <option value="2" disabled selected>Select your party</option>
-              <option v-for="party in parties" :key="party.name" :value="party.bracket">
-                {{ party.name }}
-              </option>
-            </select>
-          </div>
         </div>
 
         <div class="source">
-          Member Parties of EFA based on the regional GDP/Inhabitant. The average EU-28 (2017) = 100.
-          Index based on GDP in purchasing power standards (PPS) in relation to the EU-28 average, by NUTS 2 regions.
+          Average EU-28 (2017) = 100.
+          Index based on GDP in Purchasing Power Standards (PPS) in relation to the EU-28 average, by NUTS 2 regions.
           Source: <a href="https://ec.europa.eu/eurostat/documents/3217494/10095393/KS-HA-19-001-EN-N.pdf/d434affa-99cd-4ebf-a3e3-6d4a5f10bb07?t=1574339587000" target="_blank" rel="noopener noreferer">Eurostat</a>
         </div>
       </div>
@@ -224,7 +223,7 @@ const autoselectGDP = (e) => {
 
   &.index-column {
     width: 250px;
-    margin-right: 1rem;
+    margin-left: 1rem;
   }
 
   &.full {
