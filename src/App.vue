@@ -25,7 +25,7 @@ import FeeCalculator from './components/FeeCalculator.vue'
   margin: 2rem 0;
 
   img {
-    width: 150px;
+    width: 125px;
   }
 }
 </style>

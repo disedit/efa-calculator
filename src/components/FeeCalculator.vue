@@ -9,6 +9,12 @@
           label="Members in the Regional Parliament"
           v-model="MRPs" />
       </div>
+      <div class="efa-card field adjoined">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="inGovernment" v-model="inGovernment">
+          <label class="form-check-label" for="inGovernment">Party is in government</label>
+        </div>
+      </div>
 
       <div class="efa-card field">
         <NumberInput
@@ -22,13 +28,6 @@
           name="MEPs" 
           label="Members in the European Parliament"
           v-model="MEPs" />
-      </div>
-
-      <div class="efa-card field">
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="inGovernment" v-model="inGovernment">
-          <label class="form-check-label" for="inGovernment">Party is in government</label>
-        </div>
       </div>
 
       <div class="efa-card result" aria-live="polite">
@@ -151,7 +150,7 @@ const autoselectGDP = (e) => {
     line-height: .9;
   }
 
-  .background{
+  .background {
     position: relative;
 
     &::before {
@@ -180,6 +179,11 @@ const autoselectGDP = (e) => {
   box-shadow: var(--box-shadow);
   align-items: center;
   font-size: 1.25rem;
+
+  &.adjoined {
+    margin-top: -2rem;
+    border-top: 1px var(--gray-light) solid;
+  }
 }
 
 .result {
@@ -258,6 +262,10 @@ const autoselectGDP = (e) => {
 
     .field {
       margin: 1rem 0;
+
+      &.adjoined {
+        margin-top: -1rem;
+      }
     }
 
     .result.highlighted {
@@ -272,8 +280,9 @@ const autoselectGDP = (e) => {
       width: 100%;
     }
 
-    .party-column {
+    .index-column {
       margin-top: 1rem;
+      margin-left: 0;
     }
   }
 }

@@ -64,6 +64,7 @@ const subtract = () => {
     flex-grow: 1;
     display: flex;
     margin: calc(var(--card-padding) * -1);
+    touch-action: manipulation;
 
     &:hover,
     &:focus-within {

@@ -3,7 +3,7 @@
   --white: #{$white};
   --accent-color: #{$primary};
   --accent-color-light: #{rgba($primary, .1)};
-  --accent-color-shade: #{rgba($primary, .2)};
+  --accent-color-shade: #{rgba($primary, .15)};
   --gray-light: #{$gray-light};
   --gray-dark: #{$gray-dark};
   --box-shadow: 0 1.25rem 1.75rem 0 rgb(0 0 0 / 10%);
@@ -36,6 +36,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--gray-dark);
   overflow-x: hidden;
+  margin-bottom: 8rem;
 }
 
 /* Temp fix for boostrap 5 and Safari */
